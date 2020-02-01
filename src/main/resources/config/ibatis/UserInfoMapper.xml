@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userInfo">
+
+ <resultMap id="BaseResultMap" class="com.leiwuwang.api.login.bean.UserInfo">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userpwd" />
+    <result column="userTel" jdbcType="VARCHAR" property="usertel" />
+    <result column="userStatue" jdbcType="VARCHAR" property="userstatue" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, uuid, createTime, creator, userName, loginName, userPwd, userTel, userStatue
+  </sql>
+  
+  <select id="getAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+  </select>
+  
+  <select id="getByUuid" parameterClass="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo where uuid = #uuid#
+  </select>
+  
+   <select id="checkLogin" parameterClass="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo where userName = #username# and userPwd = #pwd# and userStatue = 1
+  </select>
+  
+</sqlMap>
